@@ -1,0 +1,35 @@
+{
+  "name": "freedesktop-notifications",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "description": "Freedesktop.org Notifications.",
+  "main": "lib/notification.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "dbus-native": "^0.2.0"
+  },
+  "devDependencies": {
+    "expect.js": "^0.3.1",
+    "jshint": "^2.5.6",
+    "mocha": "^1.21.4"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cronvel/freedesktop-notifications.git"
+  },
+  "keywords": [
+    "notification"
+  ],
+  "author": "Cédric Ronvel",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cronvel/freedesktop-notifications/issues"
+  }
+}
