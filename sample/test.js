@@ -33,12 +33,13 @@ var notifications = require( '../lib/notifications.js' ) ;
 var notif = notifications.createNotification( {
 	summary: 'Hello world!' ,
 	body: 'This is a <i>Hello world</i> sample code. <b>Thanks for your attention...</b>' ,
-	urgency: 1 ,
+	urgency: 2 ,
 	timeout: 0 ,
 	appName: 'bill app' ,
 	category: 'idk' ,
 	//iconPath: __dirname + '/log.png' ,
 	iconPath: 'appointment-new' ,
+	"sound-file": __dirname + '/hiss.wav' ,
 	//*
 	actions: {
 		default: '' ,
@@ -48,4 +49,26 @@ var notif = notifications.createNotification( {
 	//*/
 } ) ;
 
+notif.on( 'action' , function( action ) {
+	console.log( 'Action %s triggered!' , action ) ;
+} ) ;
+
+notif.on( 'close' , function( code ) {
+	console.log( 'Close was triggered with code %d' , code ) ;
+} ) ;
+
 notif.push() ;
+
+
+setTimeout( function() {
+	notif.summary = 'changed!!!' ;
+	notif.push() ;
+	
+	setTimeout( function() {
+		notif.summary = 'changed x2!!!' ;
+		notif.body = 'Oh noes!!!' ;
+		notif.push() ;
+	} , 2000 ) ;
+} , 1000 ) ;
+
+
