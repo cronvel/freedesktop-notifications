@@ -50,7 +50,7 @@ var notif = notifications.createNotification( {
 } ) ;
 
 notif.on( 'action' , function( action ) {
-	console.log( 'Action %s triggered!' , action ) ;
+	console.log( "Action '%s' triggered!" , action ) ;
 } ) ;
 
 notif.on( 'close' , function( code ) {
@@ -68,7 +68,11 @@ setTimeout( function() {
 		notif.summary = 'changed x2!!!' ;
 		notif.body = 'Oh noes!!!' ;
 		notif.push() ;
+		
+		setTimeout( function() {
+			notif.close() ;
+		} , 2000 ) ;
 	} , 2000 ) ;
-} , 1000 ) ;
+} , 2000 ) ;
 
 
