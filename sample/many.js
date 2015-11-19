@@ -30,55 +30,12 @@ var notifications = require( '../lib/notifications.js' ) ;
 
 
 
-var notif = notifications.createNotification( {
-	summary: 'Hello world!' ,
-	body: 'This is a <i>Hello world</i> sample code. <b>Thanks for your attention...</b>' ,
-	urgency: 2 ,
-	timeout: 0 ,
-	appName: 'bill app' ,
-	category: 'idk' ,
-	//iconPath: __dirname + '/log.png' ,
-	iconPath: 'appointment-new' ,
-	"sound-file": __dirname + '/hiss.wav' ,
-	//*
-	actions: {
-		default: '' ,
-		ok: 'OK!' ,
-		cancel: 'Cancel...'
-	}
-	//*/
-} ) ;
+var i ;
 
-notif.on( 'action' , function( action ) {
-	console.log( "Action '%s' triggered!" , action ) ;
-} ) ;
-
-notif.on( 'close' , function( code ) {
-	console.log( "Close was triggered with code '%s'" , code ) ;
-} ) ;
-
-notif.push() ;
-
-
-
-setTimeout( function() {
-	
-	notif.set( { summary: 'changed!!!' } ) ;
-	notif.push() ;
-	
-	setTimeout( function() {
-		
-		notif.set( {
-			summary: 'changed x2!!!' ,
-			body: 'Oh noes!!!'
-		} ) ;
-		notif.push() ;
-		
-		setTimeout( function() {
-			notif.close() ;
-			process.exit() ;
-		} , 2000 ) ;
-	} , 2000 ) ;
-} , 2000 ) ;
-
-
+for ( i = 1 ; i <= 9 ; i ++ )
+{
+	notifications.createNotification( {
+		summary: '#' + i ,
+		body: 'This is the notification <b>#' + i + '</b>'
+	} ).push() ;
+}
