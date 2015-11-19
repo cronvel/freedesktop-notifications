@@ -93,6 +93,8 @@ If the user close the notification (using the close button), or if the notificat
 	* [.push()](#ref.notification.push)
 	* [.close()](#ref.notification.close)
 	* [.set()](#ref.notification.update)
+	* [Event: action](#ref.notification.events.action)
+	* [Event: close](#ref.notification.events.close)
 * [Limitations](#ref.limitations)
 
 
@@ -249,6 +251,9 @@ This will send the notification to the notification server so it will be display
 the previous notification is dismissed. This is totally dependent to your desktop environment (some implementation may
 allow multiple notifications at the same time, but as far as I know, there is no desktop doing that at the moment).
 
+**Note that you can update a notification that has already been pushed:** just modify it using the `.set()` method, then
+`.push()` it again. Also there are some [limitations](#ref.limitations) to be aware of.
+
 
 
 <a name="ref.notification.close"></a>
@@ -260,11 +265,11 @@ This close the notification right now.
 
 
 
-<a name="ref.events"></a>
+<a name="ref.notification.events"></a>
 ## Events
 
-<a name="ref.events.action"></a>
-### *action* event ( action )
+<a name="ref.notification.events.action"></a>
+### Event: *action* ( action )
 
 * action `string` the action ID of the button the user clicked
 
@@ -275,21 +280,21 @@ the `Notification` constructor.
 
 
 
-<a name="ref.events.close"></a>
-### *close* event ( closedBy )
+<a name="ref.notification.events.close"></a>
+### Event: *close* ( closedBy )
 
 * closedBy `string` the closed reason
 
 This event is emitted when a notification is closed.
 
-The *closedBy* string indicate the reason why the notification was closed.
+The *closedBy* string indicates the reason why the notification was closed.
 
 It can be one of:
 
 * *timeout*: the notification has timed out. **Note that this code can eventually be sent by the notification server
   when a notification is closed in favor of a more urgent one.**
 * *user*: the user itself closed the notification, either by clicking the notification body, the notification close button or
-  one of the button of the notification.
+  one of the available buttons of the notification.
 * *client*: the client (i.e. the app) closed the notification, this typically happens when your app has called the `.close()`
   method on the notification object.
 * *antiLeak*: the `antiLeakTimeout` has been reached and has closed the notification.
