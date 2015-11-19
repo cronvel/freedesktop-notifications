@@ -186,7 +186,7 @@ From [Gnome.org](https://developer.gnome.org/notification-spec/):
 	* actions `Object` an object of actions, with the action codename as the key and the label of the button (`string`) as the value,
 	  e.g. `{ ok: 'OK!' , cancel: 'Cancel...' }`. Note that *default* (as the key/codename) is a special case for a click on
 	  the notification body itself, so its value/label is ignored.
-	* clientTimeout `number` the timeout in ms before giving up. This defines a period of time after which the notification
+	* antiLeakTimeout `number` the timeout in ms before giving up. This defines a period of time after which the notification
 	  should be assumed to have timed out. This exists because many notification servers (e.g. Gnome) do not send any event
 	  when a notification has actually timed out. See [the limitations section](#ref.limitations) to understand what happens
 	  behind the scene.
@@ -227,7 +227,7 @@ Instances of this *class* represent a notification about to be sent.
 	* actions `Object` an object of actions, with the action codename as the key and the label of the button (`string`) as the value,
 	  e.g. `{ ok: 'OK!' , cancel: 'Cancel...' }`. Note that *default* (as the key/codename) is a special case for a click on
 	  the notification body itself, so its value/label is ignored.
-	* clientTimeout `number` the timeout in ms before giving up. This defines a period of time after which the notification
+	* antiLeakTimeout `number` the timeout in ms before giving up. This defines a period of time after which the notification
 	  should be assumed to have timed out. This exists because many notification servers (e.g. Gnome) do not send any event
 	  when a notification has actually timed out. See [the limitations section](#ref.limitations) to understand what happens
 	  behind the scene.
@@ -260,13 +260,49 @@ This close the notification right now.
 
 
 
+<a name="ref.events"></a>
+## Events
+
+<a name="ref.events.action"></a>
+### *action* event ( action )
+
+* action `string` the action ID of the button the user clicked
+
+This event is emitted on a notification when a user as clicked a button or the notification's body (if the *default* action was set).
+
+The *action* string can be anything: it is the key of one of the property of the `actions` property that was passed to
+the `Notification` constructor.
+
+
+
+<a name="ref.events.close"></a>
+### *close* event ( closedBy )
+
+* closedBy `string` the closed reason
+
+This event is emitted when a notification is closed.
+
+The *closedBy* string indicate the reason why the notification was closed.
+
+It can be one of:
+
+* *timeout*: the notification has timed out. **Note that this code can eventually be sent by the notification server
+  when a notification is closed in favor of a more urgent one.**
+* *user*: the user itself closed the notification, either by clicking the notification body, the notification close button or
+  one of the button of the notification.
+* *client*: the client (i.e. the app) closed the notification, this typically happens when your app has called the `.close()`
+  method on the notification object.
+* *antiLeak*: the `antiLeakTimeout` has been reached and has closed the notification.
+
+
+
 <a name="ref.limitations"></a>
 ## Limitations
 
 Sending a notification in a *fire and forget* fashion works pretty well.
 
 However, advanced features like buttons are somewhat broken by design in the *org.freedesktop.Notifications* spec and
-particularly on the notification server implementation.
+particularly on notification server implementations.
 
 **In fact we are not guaranteed to get a signal when the server time out a notification**.
 
@@ -278,11 +314,8 @@ that's a real problem: as time pass without any callback triggered, how do we kn
 the user is simply away from keyboard (thus an action callback has still a chance to be triggered) or if the notification has
 been timed out and dismissed by the notification server itself.
 
-Having a button triggering action callback **MUST** imply a timeout callback mechanism...
-Sadly nothing changed for years in the spec.
-
 Also there no signal/event telling when a notification is actually displayed on screen, so there is no mechanism to know if the
-notification is displayed or queued.
+notification is displayed or is still queued.
 
 So you should be aware that:
 
@@ -291,7 +324,8 @@ So you should be aware that:
 * because we can't detect notification expiration, *freedesktop-notifications* assumes by default that the notification
   has expired after 30s for *'low'* and *'normal'* urgency notification, and after 10 minutes for *'critical'* notification:
   this is important to avoid leaking event listeners like hell. However this can be overridden by setting the property 
-  `clientTimeout` to the appropriate value.
+  `antiLeakTimeout` to the appropriate value. When the `antiLeakTimeout` kick in, **a close request is sent to the server,
+  just in case it was still on screen (or queued).** This is to avoid to have a dialog with buttons that are not responding anymore.
 * you can update a *living* notification (i.e: a notification currently displayed), but some server (e.g. Gnome) will remove
   any existing buttons or buttons about to be created (despite the fact that actions are correctly pushed to D-Bus)...
   so you would probably want to close the notification and create a brand new one if that notification involves buttons.
