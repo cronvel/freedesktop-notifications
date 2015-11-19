@@ -29,11 +29,19 @@
 var notifications = require( '../lib/notifications.js' ) ;
 
 
+notifications.getCapabilities( function( error , caps ) {
+	console.log( "Capabilities:" , caps ) ;
+} ) ;
+
+notifications.getServerInfo( function( error , info ) {
+	console.log( "Server info:" , info ) ;
+} ) ;
+
 
 var notif = notifications.createNotification( {
 	summary: 'Hello world!' ,
 	body: 'This is a <i>Hello world</i> sample code. <b>Thanks for your attention...</b>' ,
-	urgency: 2 ,
+	urgency: 'critical' ,
 	timeout: 0 ,
 	appName: 'bill app' ,
 	category: 'idk' ,
@@ -53,8 +61,8 @@ notif.on( 'action' , function( action ) {
 	console.log( "Action '%s' triggered!" , action ) ;
 } ) ;
 
-notif.on( 'close' , function( code ) {
-	console.log( "Close was triggered with code '%s'" , code ) ;
+notif.on( 'close' , function( closedBy ) {
+	console.log( "Closed by '%s'" , closedBy ) ;
 } ) ;
 
 notif.push() ;
@@ -75,8 +83,9 @@ setTimeout( function() {
 		notif.push() ;
 		
 		setTimeout( function() {
-			notif.close() ;
+			//notif.close() ;
 			//process.exit() ;
+			notifications.reset() ;
 		} , 2000 ) ;
 	} , 2000 ) ;
 } , 2000 ) ;
