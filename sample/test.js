@@ -45,9 +45,9 @@ var notif = notifications.createNotification( {
 	timeout: 0 ,
 	appName: 'bill app' ,
 	category: 'idk' ,
-	//iconPath: __dirname + '/log.png' ,
-	iconPath: 'appointment-new' ,
-	"sound-file": __dirname + '/hiss.wav' ,
+	//icon: __dirname + '/log.png' ,
+	icon: 'appointment-new' ,
+	sound: __dirname + '/hiss.wav' ,
 	//*
 	actions: {
 		default: '' ,

@@ -3,8 +3,8 @@ var notifications = require( '../lib/notifications.js' ) ;
 var notif = notifications.createNotification( {
 	summary: 'Hello world!' ,
 	body: 'This is a <i>Hello world</i> sample code. <b>Thanks for your attention...</b>' ,
-	iconPath: __dirname + '/log.png' ,
-	"sound-file": __dirname + '/hiss.wav' ,
+	icon: __dirname + '/log.png' ,
+	sound: __dirname + '/hiss.wav' ,
 	actions: {
 		default: '' ,
 		ok: 'OK!' ,
