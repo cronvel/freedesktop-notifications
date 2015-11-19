@@ -32,10 +32,12 @@ var notifications = require( '../lib/notifications.js' ) ;
 
 var i ;
 
-for ( i = 1 ; i <= 9 ; i ++ )
+for ( i = 1 ; i <= 90 ; i ++ )
 {
 	notifications.createNotification( {
 		summary: '#' + i ,
 		body: 'This is the notification <b>#' + i + '</b>'
 	} ).push() ;
 }
+
+

@@ -76,7 +76,7 @@ setTimeout( function() {
 		
 		setTimeout( function() {
 			notif.close() ;
-			process.exit() ;
+			//process.exit() ;
 		} , 2000 ) ;
 	} , 2000 ) ;
 } , 2000 ) ;
