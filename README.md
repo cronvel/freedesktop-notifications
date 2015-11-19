@@ -187,10 +187,11 @@ From [Gnome.org](https://developer.gnome.org/notification-spec/):
 	  e.g. `{ ok: 'OK!' , cancel: 'Cancel...' }`. Note that *default* (as the key/codename) is a special case for a click on
 	  the notification body itself, so its value/label is ignored.
 	* clientTimeout `number` the timeout in ms before giving up. This defines a period of time after which the notification
-	  should be assumed to have timed out. This exists because many notification server (e.g. Gnome) do not send any event
+	  should be assumed to have timed out. This exists because many notification servers (e.g. Gnome) do not send any event
 	  when a notification has actually timed out. See [the limitations section](#ref.limitations) to understand what happens
 	  behind the scene.
 	* *any other key* will be turned into a *hint*, see the [Gnome documentation](https://developer.gnome.org/notification-spec/)
+	  for the list of all well-known hints
 
 It creates and returns a `Notification` object having the aforementioned properties.
 
@@ -227,12 +228,13 @@ Instances of this *class* represent a notification about to be sent.
 	  e.g. `{ ok: 'OK!' , cancel: 'Cancel...' }`. Note that *default* (as the key/codename) is a special case for a click on
 	  the notification body itself, so its value/label is ignored.
 	* clientTimeout `number` the timeout in ms before giving up. This defines a period of time after which the notification
-	  should be assumed to have timed out. This exists because many notification server (e.g. Gnome) do not send any event
+	  should be assumed to have timed out. This exists because many notification servers (e.g. Gnome) do not send any event
 	  when a notification has actually timed out. See [the limitations section](#ref.limitations) to understand what happens
 	  behind the scene.
 	* *any other key* will be turned into a *hint*, see the [Gnome documentation](https://developer.gnome.org/notification-spec/)
+	  for the list of all well-known hints
 
-Set/reset properties after the Notification object creation.
+Set/reset properties after the `Notification` object creation.
 
 This accepts exactly the same properties the constructor does.
 
@@ -241,7 +243,7 @@ This accepts exactly the same properties the constructor does.
 <a name="ref.notification.push"></a>
 ### Notification#push( [callback] ) 
 
-* callback `Function` (optional) a callback that will be triggered when the notification was sent to the server
+* callback `Function` (optional) a callback that will be triggered when the notification is sent to the server
 
 This will send the notification to the notification server so it will be displayed as soon as possible, usually as soon as
 the previous notification is dismissed. This is totally dependent to your desktop environment (some implementation may
@@ -252,7 +254,7 @@ allow multiple notifications at the same time, but as far as I know, there is no
 <a name="ref.notification.close"></a>
 ### Notification#close( [callback] )
 
-* callback `Function` (optional) a callback that will be triggered when the close request was sent to the server
+* callback `Function` (optional) a callback that will be triggered when the close request is sent to the server
 
 This close the notification right now.
 
@@ -263,12 +265,15 @@ This close the notification right now.
 
 Sending a notification in a *fire and forget* fashion works pretty well.
 
-However, advanced features like buttons are somewhat broken by design on the *org.freedesktop.Notifications* spec and
+However, advanced features like buttons are somewhat broken by design in the *org.freedesktop.Notifications* spec and
 particularly on the notification server implementation.
 
-**In fact there is absolutely no mechanism signaling notification expiration**. That's it: the notification server can tell you if 
-the user clicked the notification, if a particular button is clicked, or if the user closed the notification, **BUT NOT IF THE SERVER
-HAS TIMED OUT YOUR NOTIFICATION!!!** For *fire and forget* it's not important, but if you want to send notifications with buttons,
+**In fact we are not guaranteed to get a signal when the server time out a notification**.
+
+That's it: the notification server can tell you if  the user clicked the notification, if a particular button is clicked,
+or if the user closed the notification, **BUT NOT IF THE SERVER HAS TIMED OUT YOUR NOTIFICATION!!!**
+
+For *fire and forget* it's not important, but if you want to send notifications with buttons,
 that's a real problem: as time pass without any callback triggered, how do we know if the notification is still displayed and
 the user is simply away from keyboard (thus an action callback has still a chance to be triggered) or if the notification has
 been timed out and dismissed by the notification server itself.
