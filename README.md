@@ -86,6 +86,10 @@ If the user close the notification (using the close button), or if the notificat
 
 * [.init()](#ref.init)
 * [.setAppName()](#ref.setAppName)
+* [.getAppName()](#ref.getAppName)
+* [.setUnflood()](#ref.setUnflood)
+* [.getUnflood()](#ref.getUnflood)
+* [.purge()](#ref.purge)
 * [.getServerInfo()](#ref.getServerInfo)
 * [.getCapabilities()](#ref.getCapabilities)
 * [.createNotification()](#ref.createNotification)
@@ -119,6 +123,52 @@ you try to get some informations out of the server.**
 
 This will configure the application name.
 The application name is **NOT** displayed.
+
+
+
+<a name="ref.getAppName"></a>
+### .getAppName()
+
+It returns the configured application name.
+
+
+
+<a name="ref.setUnflood"></a>
+### .setUnflood( value )
+
+* value `mixed` the unflood timeout, where values:
+	* *undefined*, *null*, *false* and *negative number*: disable the *unflood* feature
+	* *true*: set the timeout to 0ms
+	* *positive number*: set the timeout to that number in ms
+
+This will configure the *unflood* feature.
+
+The behaviour of notification servers is undefined when they are flooded.
+For example, Gnome seems to drop notifications when many of them are sent in a small amount of time.
+It seems like it can only queue 3 notifications at most.
+
+This feature ensures a delay between notifications to avoid losing some of them.
+
+**It is turned off by default.**
+
+As a side-effect, when sending a bunch of notifications, a part of the queue is held by your application, so if your application
+quit or crash unexpectedly, you may lose some notifications. Use [.purge()](#ref.purge) to exit cleanly.
+
+
+
+<a name="ref.getUnflood"></a>
+### .getUnflood()
+
+It returns the configured *unflood* value.
+If the *unflood* feature is disabled, it returns `-1`.
+
+
+
+<a name="ref.purge"></a>
+### .purge()
+
+It disable the *unflood* feature and send all notifications to the server right now.
+You may want to use that if you have to quickly quit your application.
 
 
 
