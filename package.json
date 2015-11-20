@@ -1,11 +1,11 @@
 {
   "name": "freedesktop-notifications",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "engines": {
     "node": ">=4.0.0"
   },
   "description": "Freedesktop.org Notifications.",
-  "main": "lib/notification.js",
+  "main": "lib/notifications.js",
   "directories": {
     "test": "test"
   },
