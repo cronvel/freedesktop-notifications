@@ -1,0 +1,6 @@
+
+v1.1.3
+======
+
+.push(), .close() and .set() now return the notification, so they can be chained
+

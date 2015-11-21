@@ -290,6 +290,8 @@ Set/reset properties after the `Notification` object creation.
 
 This accepts exactly the same properties the constructor does.
 
+It returns the notification, **so methods can be chained**.
+
 
 
 <a name="ref.notification.push"></a>
@@ -300,6 +302,8 @@ This accepts exactly the same properties the constructor does.
 This will send the notification to the notification server so it will be displayed as soon as possible, usually as soon as
 the previous notification is dismissed. This is totally dependent to your desktop environment (some implementation may
 allow multiple notifications at the same time, but as far as I know, there is no desktop doing that at the moment).
+
+It returns the notification, **so methods can be chained**.
 
 **Note that you can update a notification that has already been pushed:** just modify it using the `.set()` method, then
 `.push()` it again. Also there are some [limitations](#ref.limitations) to be aware of.
@@ -312,6 +316,8 @@ allow multiple notifications at the same time, but as far as I know, there is no
 * callback `Function` (optional) a callback that will be triggered when the close request is sent to the server
 
 This close the notification right now.
+
+It returns the notification, **so methods can be chained**.
 
 
 
