@@ -44,7 +44,7 @@ var notifications = require( '../lib/notifications.js' ) ;
 
 describe( "..." , function() {
 	
-	it( "..." , function( done ) {
+	it( "..." , function() {
 		
 	} ) ;
 	

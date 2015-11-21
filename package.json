@@ -1,6 +1,6 @@
 {
   "name": "freedesktop-notifications",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "engines": {
     "node": ">=4.0.0"
   },
@@ -18,7 +18,7 @@
     "mocha": "^1.21.4"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha -R dot"
   },
   "repository": {
     "type": "git",
