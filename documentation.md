@@ -222,7 +222,7 @@ From [Gnome.org](https://developer.gnome.org/notification-spec/):
 	* summary `string` the title/summary of the notification
 	* body `string` the body of the notification, supporting HTML tags `<b>`, `<i>` and `<u>`
 	* icon `string` (optional) either a full path to an image, or a stock image existing on your desktop environment, 
-	  e.g. "appointment-new".
+	  e.g. "appointment-new". See the [icon naming spec](https://specifications.freedesktop.org/icon-naming-spec/icon-naming-spec-latest.html).
 	* sound `string` (optional) either a full path to a sound file to play when the notification pop up or a themeable named sound
 	  from the *freedesktop.org* [sound naming spec](http://0pointer.de/public/sound-naming-spec.html)
 	   to play when the notification pops up. Similar to icon-name, only for sounds. An example would be "message-new-instant".
@@ -263,7 +263,7 @@ Instances of this *class* represent a notification about to be sent.
 	* summary `string` the title/summary of the notification
 	* body `string` the body of the notification, supporting HTML tags `<b>`, `<i>` and `<u>`
 	* icon `string` (optional) either a full path to an image, or a stock image existing on your desktop environment, 
-	  e.g. "appointment-new".
+	  e.g. "appointment-new". See the [icon naming spec](https://specifications.freedesktop.org/icon-naming-spec/icon-naming-spec-latest.html).
 	* sound `string` (optional) either a full path to a sound file to play when the notification pop up or a themeable named sound
 	  from the *freedesktop.org* [sound naming spec](http://0pointer.de/public/sound-naming-spec.html)
 	   to play when the notification pops up. Similar to icon-name, only for sounds. An example would be "message-new-instant".
