@@ -1,3 +1,6 @@
+#!/usr/bin/env node
+"use strict" ;
+
 var notifications = require( '../lib/notifications.js' ) ;
 
 var notif = notifications.createNotification( {
