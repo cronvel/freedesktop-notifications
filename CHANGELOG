@@ -1,4 +1,11 @@
 
+v1.3.0
+------
+
+New method: .destroy() -- close the underlying dbus connection
+Moved to ESLint
+
+
 v1.2.3
 ------
 
