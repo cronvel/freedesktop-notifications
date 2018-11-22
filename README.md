@@ -85,6 +85,7 @@ If the user close the notification (using the close button), or if the notificat
 **Table of content:**
 
 * [.init()](#ref.init)
+* [.destroy()](#ref.destroy)
 * [.setAppName()](#ref.setAppName)
 * [.getAppName()](#ref.getAppName)
 * [.setUnflood()](#ref.setUnflood)
@@ -113,6 +114,13 @@ Basically, it connects to D-Bus and get the *org.freedesktop.Notifications* serv
 
 **Note that you do not need to call this method, it is automatically called the first time you push a notification or when
 you try to get some informations out of the server.**
+
+
+
+<a name="ref.destroy"></a>
+### .destroy()
+
+This method will close down the lib, terminating connections with D-Bus.
 
 
 
