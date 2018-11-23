@@ -31,11 +31,14 @@
 
 var notifications = require( '..' ) ;
 
-notifications.createNotification( {
+var notif = notifications.createNotification( {
 	summary: 'Hello world!' ,
 	body: 'This is a <i>Hello world</i> sample code. <b>Thanks for your attention...</b>' ,
 	icon: 'appointment-new' ,
+	fireAndForget: true
 } ).push() ;
 
-setTimeout( () => notifications.destroy() , 100 ) ;
+//notif.on( 'close' , () => setTimeout( () => notifications.destroy() , 100 ) ) ;
+//setTimeout( () => notifications.destroy() , 100 ) ;
+//notifications.destroy() ;
 

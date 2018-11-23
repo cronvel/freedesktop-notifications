@@ -85,6 +85,7 @@ If the user close the notification (using the close button), or if the notificat
 **Table of content:**
 
 * [.init()](#ref.init)
+* [.reset()](#ref.reset)
 * [.destroy()](#ref.destroy)
 * [.setAppName()](#ref.setAppName)
 * [.getAppName()](#ref.getAppName)
@@ -117,10 +118,19 @@ you try to get some informations out of the server.**
 
 
 
+<a name="ref.reset"></a>
+### .reset()
+
+This method reset the lib, terminating connections with D-Bus.
+After that, [.init()](#ref.init) should run again (but *init* is still done implicitly on the next notification's push).
+
+
+
 <a name="ref.destroy"></a>
 ### .destroy()
 
 This method will close down the lib, terminating connections with D-Bus.
+It's the same then [.reset()](#ref.reset) except that it is irreversible.
 
 
 
@@ -250,6 +260,10 @@ From [Gnome.org](https://developer.gnome.org/notification-spec/):
 	  should be assumed to have timed out. This exists because many notification servers (e.g. Gnome) do not send any event
 	  when a notification has actually timed out. See [the limitations section](#ref.limitations) to understand what happens
 	  behind the scene.
+	* fireAndForget `boolean` the *fire and forget* mode does not care about what would happend to the notification,
+	  it will not hang the script until the notification is closed (or believed closed). Therefore, you cannot listen
+	  to 'close' event, and it's incompatible with *actions*. In fact, the underlying D-Bus connection is closed (except
+	  if another non- *fire and forget* notification is in progress).
 	* *any other key* will be turned into a *hint*, see the [Gnome documentation](https://developer.gnome.org/notification-spec/)
 	  for the list of all well-known hints
 

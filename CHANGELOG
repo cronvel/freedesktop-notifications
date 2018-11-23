@@ -1,4 +1,11 @@
 
+v1.4.0
+------
+
+New notification option 'fireAndForget'
+Many fixes on notification clean-up and on .destroy() ; Together, it should solve issue #3
+
+
 v1.3.0
 ------
 
