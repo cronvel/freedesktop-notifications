@@ -10,9 +10,9 @@
     "test": "test"
   },
   "dependencies": {
-    "dbus-native": "^0.2.5"
+    "dbus-native": "^0.2.5",
+    "seventh": "^0.7.40"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "tea-time -R dot"
   },
