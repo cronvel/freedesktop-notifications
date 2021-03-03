@@ -1,4 +1,10 @@
 
+v2.0.0
+------
+
+BREAKING: now use promise everywhere instead of callback
+
+
 v1.4.0
 ------
 

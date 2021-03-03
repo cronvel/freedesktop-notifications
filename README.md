@@ -21,9 +21,9 @@ like buttons.
 This lib is super simple to use, here is the most common use-case:
 
 ```js
-var notifications = require( 'freedesktop-notifications' ) ;
+const notifications = require( 'freedesktop-notifications' ) ;
 
-notifications.createNotification( {
+new notifications.Notification( {
 	summary: 'Hello world!' ,
 	body: 'This is a <i>Hello world</i> sample code. <b>Thanks for your attention...</b>' ,
 	icon: 'appointment-new' ,
@@ -41,9 +41,9 @@ Also note that *icon* can be either a full path to an image, or a stock image ex
 Here another example featuring **buttons** and **event listeners**:
 
 ```js
-var notifications = require( 'freedesktop-notifications' ) ;
+const notifications = require( 'freedesktop-notifications' ) ;
 
-var notif = notifications.createNotification( {
+var notif = new notifications.Notification( {
 	summary: 'Hello world!' ,
 	body: 'This is a <i>Hello world</i> sample code. <b>Thanks for your attention...</b>' ,
 	icon: __dirname + '/log.png' ,
@@ -94,24 +94,24 @@ If the user close the notification (using the close button), or if the notificat
 * [.purge()](#ref.purge)
 * [.getServerInfo()](#ref.getServerInfo)
 * [.getCapabilities()](#ref.getCapabilities)
-* [.createNotification()](#ref.createNotification)
-* [The Notification class](#ref.notification)
-	* [.push()](#ref.notification.push)
-	* [.close()](#ref.notification.close)
-	* [.set()](#ref.notification.update)
-	* [Event: action](#ref.notification.events.action)
-	* [Event: close](#ref.notification.events.close)
+* [The Notification class](#ref.Notification)
+	* [new Notification()](#ref.Notification.new)
+	* [.push()](#ref.Notification.push)
+	* [.close()](#ref.Notification.close)
+	* [.set()](#ref.Notification.update)
+	* [Event: action](#ref.Notification.events.action)
+	* [Event: close](#ref.Notification.events.close)
 * [Limitations](#ref.limitations)
 
 
 
 <a name="ref.init"></a>
-### .init( [ callback ] )
-
-* callback `Function` (optional) triggered when the lib is initialized
+### .init()
 
 This method will init the lib.
 Basically, it connects to D-Bus and get the *org.freedesktop.Notifications* service and interface.
+
+It returns a **Promise** that resolve once the lib is initialized.
 
 **Note that you do not need to call this method, it is automatically called the first time you push a notification or when
 you try to get some informations out of the server.**
@@ -124,13 +124,18 @@ you try to get some informations out of the server.**
 This method reset the lib, terminating connections with D-Bus.
 After that, [.init()](#ref.init) should run again (but *init* is still done implicitly on the next notification's push).
 
+It returns a **Promise** that resolve once the lib is reset.
+
 
 
 <a name="ref.destroy"></a>
 ### .destroy()
 
 This method will close down the lib, terminating connections with D-Bus.
-It's the same then [.reset()](#ref.reset) except that it is irreversible.
+It's the same then [.reset()](#ref.reset) except that it is **irreversible**, so do it only when you are sure
+you will never send notification anymore.
+
+It returns a **Promise** that resolve once the lib is reset.
 
 
 
@@ -185,7 +190,7 @@ If the *unflood* feature is disabled, it returns `-1`.
 <a name="ref.purge"></a>
 ### .purge()
 
-It disable the *unflood* feature and send all notifications to the server right now.
+It disables the *unflood* feature and send all notifications to the server right now.
 You may want to use that if you have to quickly quit your application.
 
 
@@ -193,7 +198,7 @@ You may want to use that if you have to quickly quit your application.
 <a name="ref.getServerInfo"></a>
 ### .getServerInfo()
 
-Returns an object containing server info, where:
+It returns a Promise resolving to an object of server informations, where:
 
 * name `string` the name of the server (e.g. "gnome-shell")
 * vendor `string` the vendor name (e.g. "GNOME")
@@ -205,7 +210,7 @@ Returns an object containing server info, where:
 <a name="ref.getCapabilities"></a>
 ### .getCapabilities()
 
-Returns an array of string containing the server capabilities.
+It returns a Promise resolving to an array of string containing the server capabilities.
 
 E.g.: `[ 'actions', 'body', 'body-markup', 'icon-static', 'persistence', 'sound' ]`.
 
@@ -233,8 +238,15 @@ From [Gnome.org](https://developer.gnome.org/notification-spec/):
 
 
 
-<a name="ref.createNotification"></a>
-### .createNotification( properties )
+<a name="ref.Notification"></a>
+## Notification Class
+
+Instances of this *class* represent a notification about to be sent.
+
+
+
+<a name="ref.Notification.new"></a>
+### new Notification( properties )
 
 * properties `Object` contains the data of the notification, where:
 	* summary `string` the title/summary of the notification
@@ -271,14 +283,7 @@ It creates and returns a `Notification` object having the aforementioned propert
 
 
 
-<a name="ref.notification"></a>
-## Notification Class
-
-Instances of this *class* represent a notification about to be sent.
-
-
-
-<a name="ref.notification.set"></a>
+<a name="ref.Notification.set"></a>
 ### Notification#set( properties )
 
 * properties `Object` contains the data of the notification, where:
@@ -316,37 +321,34 @@ It returns the notification, **so methods can be chained**.
 
 
 
-<a name="ref.notification.push"></a>
-### Notification#push( [callback] ) 
-
-* callback `Function` (optional) a callback that will be triggered when the notification is sent to the server
+<a name="ref.Notification.push"></a>
+### Notification#push() 
 
 This will send the notification to the notification server so it will be displayed as soon as possible, usually as soon as
 the previous notification is dismissed. This is totally dependent to your desktop environment (some implementation may
 allow multiple notifications at the same time, but as far as I know, there is no desktop doing that at the moment).
 
-It returns the notification, **so methods can be chained**.
+It returns a promise that resolves once the notification is sent to the server.
 
 **Note that you can update a notification that has already been pushed:** just modify it using the `.set()` method, then
 `.push()` it again. Also there are some [limitations](#ref.limitations) to be aware of.
 
 
 
-<a name="ref.notification.close"></a>
-### Notification#close( [callback] )
-
-* callback `Function` (optional) a callback that will be triggered when the close request is sent to the server
+<a name="ref.Notification.close"></a>
+### Notification#close()
 
 This close the notification right now.
 
-It returns the notification, **so methods can be chained**.
+It returns a Promise that resolves when the close request is sent to the server, but it is usually sent immediately.
 
 
 
-<a name="ref.notification.events"></a>
+
+<a name="ref.Notification.events"></a>
 ## Events
 
-<a name="ref.notification.events.action"></a>
+<a name="ref.Notification.events.action"></a>
 ### Event: *action* ( action )
 
 * action `string` the action ID of the button the user clicked
@@ -358,7 +360,7 @@ the `Notification` constructor.
 
 
 
-<a name="ref.notification.events.close"></a>
+<a name="ref.Notification.events.close"></a>
 ### Event: *close* ( closedBy )
 
 * closedBy `string` the closed reason
@@ -393,11 +395,11 @@ That's it: the notification server can tell you if  the user clicked the notific
 or if the user closed the notification, **BUT NOT IF THE SERVER HAS TIMED OUT YOUR NOTIFICATION!!!**
 
 For *fire and forget* it's not important, but if you want to send notifications with buttons,
-that's a real problem: as time pass without any callback triggered, how do we know if the notification is still displayed and
-the user is simply away from keyboard (thus an action callback has still a chance to be triggered) or if the notification has
-been timed out and dismissed by the notification server itself.
+that's a real problem: as time pass without any callback triggered by the underlying D-Bus insterface, how do we know if the
+notification is still displayed and the user is simply away from keyboard (thus an action callback has still a chance to be triggered)
+or if the notification has been timed out and dismissed by the notification server itself?
 
-Also there no signal/event telling when a notification is actually displayed on screen, so there is no mechanism to know if the
+Also there is no signal/event telling when a notification is actually displayed on screen, so there is no mechanism to know if the
 notification is displayed or is still queued.
 
 So you should be aware that:
@@ -418,3 +420,4 @@ So you should be aware that:
 ## License
 
 MIT License. See the `LICENSE` file.
+
