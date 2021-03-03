@@ -10,7 +10,7 @@
     "test": "test"
   },
   "dependencies": {
-    "dbus-native": "^0.2.5",
+    "dbus-native": "^0.4.0",
     "seventh": "^0.7.40"
   },
   "scripts": {
