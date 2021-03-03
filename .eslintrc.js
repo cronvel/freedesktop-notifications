@@ -125,7 +125,7 @@ module.exports = {
 		'object-curly-newline': [ 'error' , {
 			'ObjectExpression' : {
 				'consistent': true ,
-				'minProperties': 4
+				'minProperties': 5
 			} ,
 			'ObjectPattern' : {
 				// object destructuring assigment

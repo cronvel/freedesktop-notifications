@@ -1,7 +1,7 @@
 /*
 	Freedesktop.org Notifications
 
-	Copyright (c) 2015 - 2018 Cédric Ronvel
+	Copyright (c) 2015 - 2021 Cédric Ronvel
 
 	The MIT License (MIT)
 
@@ -29,26 +29,11 @@
 
 
 
-var notifications = require( '../lib/notifications.js' ) ;
-//var async = require( 'async-kit' ) ;
-//var expect = require( 'expect.js' ) ;
+const notifications = require( '../lib/notifications.js' ) ;
 
 
 
-
-
-
-			/* Tests */
-
-
-
-describe( "..." , function() {
-	
-	it( "..." , function() {
-		
-	} ) ;
-	
+describe( "..." , () => {
+	it( "..." , () => {} ) ;
 } ) ;
-
-
 
