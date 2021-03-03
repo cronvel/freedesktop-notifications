@@ -24,15 +24,16 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 	SOFTWARE.
 */
+
 "use strict" ;
 
-var notifications = require( '../lib/notifications.js' ) ;
+const notifications = require( '..' ) ;
 
-var notif = notifications.createNotification( {
+var notif = new notifications.Notification( {
 	summary: 'Hello world!' ,
 	body: 'This is a <i>Hello world</i> sample code. <b>Thanks for your attention...</b>' ,
 	icon: __dirname + '/log.png' ,
-	sound: __dirname + '/hiss.wav' ,
+	//sound: __dirname + '/hiss.wav' ,
 	actions: {
 		default: '' ,
 		ok: 'OK!' ,

@@ -27,7 +27,7 @@
 
 "use strict" ;
 
-const notifications = require( '../lib/notifications.js' ) ;
+const notifications = require( '..' ) ;
 
 
 async function run() {
@@ -40,14 +40,14 @@ async function run() {
 	var notif = new notifications.Notification( {
 		summary: 'Hello world!' ,
 		body: 'This is a <i>Hello world</i> sample code. <b>Thanks for your attention...</b>' ,
-		urgency: 'critical' ,
-		//timeout: 0 ,
+		//urgency: 'critical' ,
+		timeout: 0 ,
 		appName: 'bill app' ,
 		category: 'idk' ,
-		//icon: __dirname + '/log.png' ,
-		icon: 'appointment-new' ,
-		sound: __dirname + '/hiss.wav' ,
-		/*
+		icon: __dirname + '/log.png' ,
+		//icon: 'appointment-new' ,
+		//sound: __dirname + '/hiss.wav' ,
+		//*
 		actions: {
 			default: '' ,
 			ok: 'OK!' ,

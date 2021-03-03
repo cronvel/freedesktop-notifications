@@ -24,25 +24,26 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 	SOFTWARE.
 */
+
 "use strict" ;
 
-var notifications = require( '../lib/notifications.js' ) ;
+const notifications = require( '..' ) ;
 
 var i ;
 
 notifications.setUnflood( 300 ) ;
 
-for ( i = 1 ; i <= 10 ; i ++ )
-{
-	notifications.createNotification( {
+for ( i = 1 ; i <= 10 ; i ++ ) {
+	new notifications.Notification( {
 		summary: '#' + i ,
 		body: 'This is the notification <b>#' + i + '</b>' ,
 		urgency: 1
 	} ).push() ;
 }
 
-setTimeout( function() {
+setTimeout( () => {
 	notifications.purge() ;
 	process.exit() ;
 	//setTimeout( function() { process.exit() ; } , 150 ) ;
 } , 1500 ) ;
+
