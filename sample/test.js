@@ -51,7 +51,8 @@ async function run() {
 		actions: {
 			default: '' ,
 			ok: 'OK!' ,
-			cancel: 'Cancel...'
+			cancel: 'Cancel...',
+			'inline-reply': 'Reply...'
 		}
 		//*/
 	} ) ;
@@ -64,6 +65,10 @@ async function run() {
 		console.log( "Closed by '%s'" , closedBy ) ;
 	} ) ;
 
+	notif.on( 'reply' , message => {
+		console.log( "Reply got: '%s'" , message ) ;
+	} ) ;
+
 	await notif.push() ;
 	console.log( "Pushed!" ) ;
 
@@ -73,14 +78,14 @@ async function run() {
 	setTimeout( () => {
 		notif.set( { summary: 'changed!!!' } ) ;
 		notif.push() ;
-		
+
 		setTimeout( () => {
 			notif.set( {
 				summary: 'changed x2!!!' ,
 				body: 'Oh noes!!!'
 			} ) ;
 			notif.push() ;
-			
+
 			setTimeout( () => {
 				//notif.close() ;
 				//process.exit() ;
