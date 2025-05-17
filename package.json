@@ -1,8 +1,8 @@
 {
   "name": "freedesktop-notifications",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "engines": {
-    "node": ">=14.15.0"
+    "node": ">=16.13.0"
   },
   "description": "Freedesktop.org Notifications.",
   "main": "lib/notifications.js",
@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "dbus-native": "^0.4.0",
-    "seventh": "^0.7.40"
+    "seventh": "^0.9.3"
   },
   "scripts": {
     "test": "tea-time -R dot"
